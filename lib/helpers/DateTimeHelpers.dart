@@ -26,16 +26,14 @@ String formatDateTimeForDisplay (DateTime dateTime) {
 }
 
 /**
- * Calculates remaining time left based on end date provided.
+ * Calculates remaining time left based on end date provided and returns a string.
  *
  */
-String calculateTimeLeft (String endDateStr) {
-  DateTime? end_date_time = convertDateStringToDateTime(endDateStr);
-
+String calculateTimeLeft (DateTime startDateTime, DateTime endDateTime) {
   String time_left = "";
 
   try {
-    Duration duration = end_date_time!.difference(DateTime.now());
+    Duration duration = endDateTime.difference(startDateTime);
 
     // Reduce by 1 day because we plan to show the remaining hours as well
     String days = (duration.inDays - 1).toString();

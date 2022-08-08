@@ -130,7 +130,7 @@ class _HomePageState extends State<HomePage> {
                             children: [
                               Text('Time Left', style: GREY_TEXT),
                               const SizedBox(height: 5),
-                              Text(calculateTimeLeft(item['end_date']), style: TextStyle(fontWeight: FontWeight.bold)),
+                              Text(item["time_left"], style: TextStyle(fontWeight: FontWeight.bold)),
                             ],
                           ),
                         ],
