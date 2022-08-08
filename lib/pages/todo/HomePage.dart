@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../components/AppNavBar.dart';
 import '../../helpers/DateTimeHelpers.dart';
 import 'AddTodoPage.dart';
+import 'EditTodoPage.dart';
 
 
 class HomePage extends StatefulWidget {
@@ -64,11 +65,13 @@ class _HomePageState extends State<HomePage> {
   }
 
 
-  void goToEditPage (dynamic item) {
-    // Navigator.push(
-    //   context,
-    //   MaterialPageRoute(builder: (context) => EditTodoPage(todoItem: item),
-    // );
+  void goToEditTodoPage (dynamic item) {
+    print('Going to add todo page..');
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => EditTodoPage(id: item['id'], todoItem: item))
+    );
   }
 
   Widget TodoCard (dynamic item) {
@@ -157,7 +160,7 @@ class _HomePageState extends State<HomePage> {
                     const SizedBox(width: 10),
                     Checkbox(
                       value: this.value,
-                      onChanged: (bool? val) async {                                               
+                      onChanged: (bool? val) async {
                         setState(() {
                           this.value = val;
                         });
@@ -189,7 +192,7 @@ class _HomePageState extends State<HomePage> {
               InkWell(
                 child: TodoCard(itemList[index]),
                 onTap: () {
-                  goToEditPage(itemList[index]);
+                  goToEditTodoPage(itemList[index]);
                 },
               ),
             ],
