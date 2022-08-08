@@ -7,6 +7,7 @@ import '../../components/AppNavBar.dart';
 import '../../components/AppScaffold.dart';
 import '../../components/DatePicker.dart';
 import '../../helpers/DateTimeHelpers.dart';
+import '../../models/AppDate.dart';
 import 'HomePage.dart';
 
 
@@ -21,14 +22,13 @@ class AddTodoPage extends StatefulWidget {
 
 class _AddTodoPageState extends State<AddTodoPage> {
   String? _title;
-   
-  String? _start_date;
-  DateTime? _start_date_time;
-  String? _display_start_date;
 
-  String? _end_date;
+  AppDate? _start_app_date;
+  AppDate? _end_app_date;
+
+  DateTime? _start_date_time;
   DateTime? _end_date_time;
-  String? _display_end_date;    
+
 
   Future<void> saveTodo () async {
     // Save data locally
@@ -52,13 +52,14 @@ class _AddTodoPageState extends State<AddTodoPage> {
       dynamic new_todo = {
         "id": widget.current_id,
         "title": _title,
-        "start_date": _start_date,
-        "display_start_date": _display_start_date,
-        "end_date": _end_date,
-        "display_end_date": _display_end_date,
+        "start_app_date": _start_app_date,
+        "end_app_date": _end_app_date,
         "time_left": time_left,
         "is_complete": false,
       };
+
+      print('adding new todo..');
+      print(new_todo);
 
       todos.add(new_todo);
 
@@ -115,13 +116,14 @@ class _AddTodoPageState extends State<AddTodoPage> {
 
             DatePicker(
               onSelect: (DateTime selectedDate, String displayDate) {
+                AppDate selected_app_date = AppDate(selectedDate.toString(), displayDate);
+
                 setState(() {
+                  _start_app_date = selected_app_date;
                   _start_date_time = selectedDate;
-                  _start_date = selectedDate.toString();
-                  _display_start_date = displayDate;
                 });
               },
-              selectedDate: convertDateStringToDateTime(_start_date),
+              selectedDate: convertDateStringToDateTime(_start_app_date?.dateTimeString),
             ),
 
             const SizedBox(height: 20),
@@ -132,13 +134,14 @@ class _AddTodoPageState extends State<AddTodoPage> {
 
             DatePicker(
               onSelect: (DateTime selectedDate, String displayDate) {
+                AppDate selected_app_date = AppDate(selectedDate.toString(), displayDate);
+
                 setState(() {
+                  _end_app_date = selected_app_date;
                   _end_date_time = selectedDate;
-                  _end_date = selectedDate.toString();
-                  _display_end_date = displayDate;
                 });
               },
-              selectedDate: convertDateStringToDateTime(_end_date),
+              selectedDate: convertDateStringToDateTime(_end_app_date?.dateTimeString),
             ),
 
             SizedBox(height: 20),

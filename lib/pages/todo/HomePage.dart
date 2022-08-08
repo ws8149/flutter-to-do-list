@@ -114,7 +114,7 @@ class _HomePageState extends State<HomePage> {
                             children: [
                               Text('Start Date', style: GREY_TEXT),
                               const SizedBox(height: 5),
-                              Text(item["display_start_date"], style: TextStyle(fontWeight: FontWeight.bold)),
+                              Text(item["start_app_date"]["display_date"], style: TextStyle(fontWeight: FontWeight.bold)),
                             ],
                           ),
                           Column(
@@ -122,7 +122,7 @@ class _HomePageState extends State<HomePage> {
                             children: [
                               Text('End Date', style: GREY_TEXT),
                               const SizedBox(height: 5),
-                              Text(item["display_end_date"], style: TextStyle(fontWeight: FontWeight.bold)),
+                              Text(item["end_app_date"]["display_date"], style: TextStyle(fontWeight: FontWeight.bold)),
                             ],
                           ),
                           Column(
