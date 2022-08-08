@@ -150,6 +150,7 @@ class _AddTodoPageState extends State<AddTodoPage> {
 
             Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
           } catch (err) {
+            print("error adding new todo");
             print(err);
           }
 

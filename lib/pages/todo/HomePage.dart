@@ -101,34 +101,37 @@ class _HomePageState extends State<HomePage> {
 
                     const SizedBox(height: 10),
 
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('Start Date', style: GREY_TEXT),
-                            const SizedBox(height: 5),
-                            Text(item["display_start_date"], style: TextStyle(fontWeight: FontWeight.bold)),
-                          ],
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('End Date', style: GREY_TEXT),
-                            const SizedBox(height: 5),
-                            Text(item["display_end_date"], style: TextStyle(fontWeight: FontWeight.bold)),
-                          ],
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('Time Left', style: GREY_TEXT),
-                            const SizedBox(height: 5),
-                            Text(calculateTimeLeft(item['end_date']), style: TextStyle(fontWeight: FontWeight.bold)),
-                          ],
-                        ),
-                      ],
+                    Container(
+                      // color: Colors.red,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('Start Date', style: GREY_TEXT),
+                              const SizedBox(height: 5),
+                              Text(item["display_start_date"], style: TextStyle(fontWeight: FontWeight.bold)),
+                            ],
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('End Date', style: GREY_TEXT),
+                              const SizedBox(height: 5),
+                              Text(item["display_end_date"], style: TextStyle(fontWeight: FontWeight.bold)),
+                            ],
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('Time Left', style: GREY_TEXT),
+                              const SizedBox(height: 5),
+                              Text(calculateTimeLeft(item['end_date']), style: TextStyle(fontWeight: FontWeight.bold)),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 )
@@ -154,10 +157,7 @@ class _HomePageState extends State<HomePage> {
                     const SizedBox(width: 10),
                     Checkbox(
                       value: this.value,
-                      onChanged: (bool? val) async {
-                        SharedPreferences prefs = await SharedPreferences.getInstance();
-                        prefs.setStringList('TODO_ITEMS', []);
-
+                      onChanged: (bool? val) async {                                               
                         setState(() {
                           this.value = val;
                         });
