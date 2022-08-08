@@ -1,27 +1,64 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../components/AppNavBar.dart';
+import 'AddTodoPage.dart';
 
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key, required this.title}) : super(key: key);
-
-  final String title;
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  int _counter = 0;
+
   bool? value = false;
 
+  List<dynamic> itemList = [];
 
-  void _addTodoItem() {
+  // List<dynamic> itemList = [
+  //   {
+  //     "id": 1,
+  //     "title": "Automated Testing Script 1",
+  //     "start_date": 982731983,
+  //     "end_date": 120321831,
+  //     "is_complete": false,
+  //   },
+  //   {
+  //     "id": 2,
+  //     "title": "Automated Testing Script 2",
+  //     "start_date": 982731983,
+  //     "end_date": 120321831,
+  //     "is_complete": false,
+  //   },
+  //
+  // ]
+
+  Future<void> initHomePage() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String prefs_todos = prefs.getString('TODO_ITEMS') ?? '';
+
+    List<dynamic> todos = [];
+
+    if (prefs_todos != '') {
+      todos = jsonDecode(prefs_todos);
+    }
+
     setState(() {
-      _counter++;
+      itemList = todos;
     });
   }
+
+  @override
+  void initState() {
+    super.initState();
+    initHomePage();
+  }
+
 
   void goToEditPage (dynamic item) {
     // Navigator.push(
@@ -30,7 +67,7 @@ class _HomePageState extends State<HomePage> {
     // );
   }
 
-  Widget TodoCard () {
+  Widget TodoCard (dynamic item) {
     const GREY_TEXT = TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: Colors.grey);
 
     return Container(
@@ -56,7 +93,7 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     const SizedBox(height: 10),
 
-                    Text('Automated Testing Script', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                    Text("a", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
 
                     const SizedBox(height: 10),
 
@@ -113,7 +150,10 @@ class _HomePageState extends State<HomePage> {
                     const SizedBox(width: 10),
                     Checkbox(
                       value: this.value,
-                      onChanged: (bool? val) {
+                      onChanged: (bool? val) async {
+                        SharedPreferences prefs = await SharedPreferences.getInstance();
+                        prefs.setStringList('TODO_ITEMS', []);
+
                         setState(() {
                           this.value = val;
                         });
@@ -132,7 +172,6 @@ class _HomePageState extends State<HomePage> {
 
 
   Widget ItemListWidget () {
-    List<dynamic> itemList = [{"id": 1, "name": "a"}, {"id": 2, "name": "a"}];
 
     if (itemList.isNotEmpty) {
       return ListView.separated(
@@ -144,7 +183,7 @@ class _HomePageState extends State<HomePage> {
           return Column(
             children: [
               InkWell(
-                child: TodoCard(),
+                child: TodoCard(itemList[index]),
                 onTap: () {
                   goToEditPage(itemList[index]);
                 },
@@ -154,7 +193,10 @@ class _HomePageState extends State<HomePage> {
         },
       );
     } else {
-      return Container();
+      return Container(
+        height: MediaQuery.of(context).size.height,
+        child: Center(child: Text('To-do List is empty at the moment.'))
+      );
     }
   }
 
@@ -174,7 +216,14 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _addTodoItem,
+        onPressed: () {
+          int currentId = itemList.length - 1;
+
+          Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => AddTodoPage(current_id: currentId))
+          );
+        },
         tooltip: 'Add Item',
         child: const Icon(Icons.add, color: Colors.white),
         backgroundColor: Colors.deepOrange,

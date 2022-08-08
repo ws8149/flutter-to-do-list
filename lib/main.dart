@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.yellow
       ),
-      home: const HomePage(title: 'To-Do List Home Page'),
+      home: const HomePage(),
     );
   }
 }
