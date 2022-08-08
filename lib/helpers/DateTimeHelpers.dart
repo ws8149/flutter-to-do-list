@@ -24,3 +24,25 @@ String formatDateTimeForDisplay (DateTime dateTime) {
 
   return output;
 }
+
+String calculateTimeLeft (String endDateStr) {
+  DateTime? end_date_time = convertDateStringToDateTime(endDateStr);
+
+  // Calculate time left
+  String time_left = "";
+
+  try {
+    Duration duration = end_date_time!.difference(DateTime.now());
+
+    if (duration.inHours > 23) {
+      time_left = "${duration.inHours.toString()} hrs";
+    } else {
+      time_left = "${duration.inDays.toString()} days";
+    }
+
+  } catch (err) {
+    print('Error calculating time left: $err');
+  }
+
+  return time_left;
+}

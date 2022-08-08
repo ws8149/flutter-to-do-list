@@ -102,7 +102,7 @@ class _HomePageState extends State<HomePage> {
                     const SizedBox(height: 10),
 
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -115,7 +115,7 @@ class _HomePageState extends State<HomePage> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Estimate End Date', style: GREY_TEXT),
+                            Text('End Date', style: GREY_TEXT),
                             const SizedBox(height: 5),
                             Text(item["display_end_date"], style: TextStyle(fontWeight: FontWeight.bold)),
                           ],
@@ -125,7 +125,7 @@ class _HomePageState extends State<HomePage> {
                           children: [
                             Text('Time Left', style: GREY_TEXT),
                             const SizedBox(height: 5),
-                            Text('23 hrs 22 min', style: TextStyle(fontWeight: FontWeight.bold)),
+                            Text(calculateTimeLeft(item['end_date']), style: TextStyle(fontWeight: FontWeight.bold)),
                           ],
                         ),
                       ],

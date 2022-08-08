@@ -20,8 +20,10 @@ class AddTodoPage extends StatefulWidget {
 
 class _AddTodoPageState extends State<AddTodoPage> {
   String? _title;
+
   String? _start_date;
   String? _display_start_date;
+
   String? _end_date;
   String? _display_end_date;
 
