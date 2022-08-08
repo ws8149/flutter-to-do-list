@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../components/AppNavBar.dart';
 import '../../components/DatePicker.dart';
+import '../../helpers/DateTimeHelpers.dart';
 import 'HomePage.dart';
 
 
@@ -18,20 +19,9 @@ class AddTodoPage extends StatefulWidget {
 }
 
 class _AddTodoPageState extends State<AddTodoPage> {
-  int _counter = 0;
-
-  void _addTodoItem() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  void goToEditPage (dynamic item) {
-    // Navigator.push(
-    //   context,
-    //   MaterialPageRoute(builder: (context) => EditTodoPage(todoItem: item),
-    // );
-  }
+  String? _title;
+  String? _start_date;
+  String? _end_date;
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +52,7 @@ class _AddTodoPageState extends State<AddTodoPage> {
               maxLines: 10,
               onChanged: (value) {
                 setState(() {
-
+                  title = value;
                 });
               },
             ),
@@ -74,10 +64,12 @@ class _AddTodoPageState extends State<AddTodoPage> {
             const SizedBox(height: 10),
 
             DatePicker(
-              onSelect: () {
-
+              onSelect: (DateTime selectedDate) {
+                setState(() {
+                  _start_date = selectedDate.toString();
+                });
               },
-              selectedDate: null,
+              selectedDate: convertDateStringToDateTime(_start_date),
             ),
 
             const SizedBox(height: 20),
@@ -87,10 +79,12 @@ class _AddTodoPageState extends State<AddTodoPage> {
             const SizedBox(height: 10),
 
             DatePicker(
-              onSelect: () {
-
+              onSelect: (DateTime selectedDate) {
+                setState(() {
+                  _end_date = selectedDate.toString();
+                });
               },
-              selectedDate: null,
+              selectedDate: convertDateStringToDateTime(_end_date),
             ),
 
             SizedBox(height: 20),
@@ -115,8 +109,7 @@ class _AddTodoPageState extends State<AddTodoPage> {
         ),
       ),
       bottomSheet: InkWell(
-        onTap: () async {
-
+        onTap: () async {         
           // Save data locally
           try {
             // Get latest todos list from prefs
@@ -135,9 +128,9 @@ class _AddTodoPageState extends State<AddTodoPage> {
             print("Update todos list");
             dynamic new_todo = {
               "id": widget.current_id,
-              "title": "Automated Testing Script 1",
-              "start_date": 982731983,
-              "end_date": 120321831,
+              "title": _title,
+              "start_date": _start_date,
+              "end_date": _end_date,
               "is_complete": false,
             };
 

@@ -14,6 +14,22 @@ class DatePicker extends StatefulWidget {
 class DatePickerState extends State<DatePicker> {
   String? dateText;
 
+  void initDatePicker () {
+    if (widget.selectedDate != null) {
+      setState(() {
+        dateText = widget.selectedDate!.day.toString() + '/' +
+            widget.selectedDate!.month.toString() + '/' +
+            widget.selectedDate!.year.toString();
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    initDatePicker();
+  }
+
   Future<void> openBottomSheet(BuildContext context, Widget child, {double? height}) {
     return showModalBottomSheet(
       isScrollControlled: false,
@@ -26,14 +42,14 @@ class DatePickerState extends State<DatePicker> {
       backgroundColor: Colors.white,
       context: context,
       builder: (context) => Container(
-          height: height ?? MediaQuery.of(context).size.height / 2.5,
+          height: height ?? MediaQuery.of(context).size.height / 2,
           child: child
       ),
     );
   }
 
   Widget datetimePicker(BuildContext context) {
-    DateTime? selectedDate;
+    DateTime? selectedDate = widget.selectedDate;
 
     return Center(
       child: Column(
@@ -43,7 +59,7 @@ class DatePickerState extends State<DatePicker> {
           Container(
             height: 200,
             child: CupertinoDatePicker(
-              initialDateTime: DateTime.now(),
+              initialDateTime: selectedDate ?? DateTime.now(),
               onDateTimeChanged: (DateTime newDate) {
                 selectedDate = newDate;
               },
