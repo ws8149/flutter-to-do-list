@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../components/AppNavBar.dart';
+import '../../helpers/DateTimeHelpers.dart';
 import 'AddTodoPage.dart';
 
 
@@ -47,6 +48,9 @@ class _HomePageState extends State<HomePage> {
     if (prefs_todos != '') {
       todos = jsonDecode(prefs_todos);
     }
+
+    print("todos retrieved: ");
+    print(todos);
 
     setState(() {
       itemList = todos;
@@ -105,15 +109,15 @@ class _HomePageState extends State<HomePage> {
                           children: [
                             Text('Start Date', style: GREY_TEXT),
                             const SizedBox(height: 5),
-                            Text('21 Oct 2019', style: TextStyle(fontWeight: FontWeight.bold)),
+                            Text(item["display_start_date"], style: TextStyle(fontWeight: FontWeight.bold)),
                           ],
                         ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('End Date', style: GREY_TEXT),
+                            Text('Estimate End Date', style: GREY_TEXT),
                             const SizedBox(height: 5),
-                            Text('21 Oct 2019', style: TextStyle(fontWeight: FontWeight.bold)),
+                            Text(item["display_end_date"], style: TextStyle(fontWeight: FontWeight.bold)),
                           ],
                         ),
                         Column(

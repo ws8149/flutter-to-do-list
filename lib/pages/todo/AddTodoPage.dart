@@ -21,7 +21,9 @@ class AddTodoPage extends StatefulWidget {
 class _AddTodoPageState extends State<AddTodoPage> {
   String? _title;
   String? _start_date;
+  String? _display_start_date;
   String? _end_date;
+  String? _display_end_date;
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +54,7 @@ class _AddTodoPageState extends State<AddTodoPage> {
               maxLines: 10,
               onChanged: (value) {
                 setState(() {
-                  title = value;
+                  _title = value;
                 });
               },
             ),
@@ -64,9 +66,10 @@ class _AddTodoPageState extends State<AddTodoPage> {
             const SizedBox(height: 10),
 
             DatePicker(
-              onSelect: (DateTime selectedDate) {
+              onSelect: (DateTime selectedDate, String displayDate) {
                 setState(() {
                   _start_date = selectedDate.toString();
+                  _display_start_date = displayDate;
                 });
               },
               selectedDate: convertDateStringToDateTime(_start_date),
@@ -79,9 +82,10 @@ class _AddTodoPageState extends State<AddTodoPage> {
             const SizedBox(height: 10),
 
             DatePicker(
-              onSelect: (DateTime selectedDate) {
+              onSelect: (DateTime selectedDate, String displayDate) {
                 setState(() {
                   _end_date = selectedDate.toString();
+                  _display_end_date = displayDate;
                 });
               },
               selectedDate: convertDateStringToDateTime(_end_date),
@@ -109,7 +113,7 @@ class _AddTodoPageState extends State<AddTodoPage> {
         ),
       ),
       bottomSheet: InkWell(
-        onTap: () async {         
+        onTap: () async {
           // Save data locally
           try {
             // Get latest todos list from prefs
@@ -130,7 +134,9 @@ class _AddTodoPageState extends State<AddTodoPage> {
               "id": widget.current_id,
               "title": _title,
               "start_date": _start_date,
+              "display_start_date": _display_start_date,
               "end_date": _end_date,
+              "display_end_date": _display_end_date,
               "is_complete": false,
             };
 

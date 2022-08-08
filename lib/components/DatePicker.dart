@@ -74,15 +74,17 @@ class DatePickerState extends State<DatePicker> {
               // Select current date for user by default
               selectedDate = selectedDate ?? DateTime.now();
 
+              String formattedDateText = selectedDate!.day.toString() + '/' +
+                  selectedDate!.month.toString() + '/' +
+                  selectedDate!.year.toString();
+
               setState(() {
-                dateText = selectedDate!.day.toString() + '/' +
-                    selectedDate!.month.toString() + '/' +
-                    selectedDate!.year.toString();
+                dateText = formattedDateText;
               });
 
               Navigator.of(context).pop();
 
-              widget.onSelect(selectedDate);
+              widget.onSelect(selectedDate, formattedDateText);
             },
           )
         ],
