@@ -224,7 +224,11 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          int currentId = itemList.length - 1;
+
+          int currentId = 1;
+          if (itemList.length > 0) {
+            currentId = itemList.length - 1;
+          }
 
           Navigator.push(
               context,

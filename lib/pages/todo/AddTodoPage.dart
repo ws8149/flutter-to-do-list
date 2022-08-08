@@ -42,7 +42,6 @@ class _AddTodoPageState extends State<AddTodoPage> {
 
       if (prefs_todos != '') {
         todos = jsonDecode(prefs_todos);
-        print('todos decoded: $todos');
       }
       
       // Calculate time left
