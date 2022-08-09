@@ -1,11 +1,7 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_to_do_list/storage/LocalStorage.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../components/AppNavBar.dart';
-import '../../helpers/DateTimeHelpers.dart';
 import '../../models/AppDate.dart';
 import '../../models/Todo.dart';
 import 'AddTodoPage.dart';
@@ -23,14 +19,14 @@ class _HomePageState extends State<HomePage> {
 
   bool? value = false;
 
-  List<Todo> _todoList = [];
+  List<Todo> _todo_list = [];
 
   Future<void> initHomePage() async {
     LocalStorage localStorage = LocalStorage();
     await localStorage.loadTodoList();
 
     setState(() {
-      _todoList = localStorage.getTodoList();
+      _todo_list = localStorage.getTodoList();
     });
   }
 
@@ -41,12 +37,12 @@ class _HomePageState extends State<HomePage> {
   }
 
 
-  void goToEditTodoPage (dynamic item) {
+  void goToEditTodoPage (Todo todo) {
     print('Going to add todo page..');
 
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => EditTodoPage(id: item['id'], todoItem: item))
+      MaterialPageRoute(builder: (context) => EditTodoPage(id: todo.id!, todoItem: todo))
     );
   }
 
@@ -154,13 +150,11 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-
-
   Widget ItemListWidget () {
 
-    if (_todoList.isNotEmpty) {
+    if (_todo_list.isNotEmpty) {
       return ListView.separated(
-        itemCount: _todoList.length,
+        itemCount: _todo_list.length,
           separatorBuilder: (context, index) => SizedBox(
             height: 15,
           ),
@@ -168,9 +162,9 @@ class _HomePageState extends State<HomePage> {
           return Column(
             children: [
               InkWell(
-                child: TodoCard(_todoList[index]),
+                child: TodoCard(_todo_list[index]),
                 onTap: () {
-                  goToEditTodoPage(_todoList[index]);
+                  goToEditTodoPage(_todo_list[index]);
                 },
               ),
             ],
@@ -203,14 +197,14 @@ class _HomePageState extends State<HomePage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
 
-          int currentId = 1;
-          if (_todoList.length > 0) {
-            currentId = _todoList.length - 1;
+          int _currentId = 1;
+          if (_todo_list.length > 0) {
+            _currentId = _todo_list.length - 1;
           }
 
           Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => AddTodoPage(current_id: currentId))
+              MaterialPageRoute(builder: (context) => AddTodoPage(currentId: _currentId))
           );
         },
         tooltip: 'Add Item',
