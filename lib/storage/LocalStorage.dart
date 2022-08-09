@@ -153,4 +153,9 @@ class LocalStorage {
     prefs.setString(StorageKeys.TODO_ITEMS, jsonEncode(todos));
   }
 
+  Future<void> clear() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.clear();
+  }
+
 }
