@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_to_do_list/storage/LocalStorage.dart';
 
-import '../../components/AppNavBar.dart';
-import '../../models/AppDate.dart';
-import '../../models/Todo.dart';
+import 'package:flutter_to_do_list/components/AppNavBar.dart';
+import 'package:flutter_to_do_list/models/AppDate.dart';
+import 'package:flutter_to_do_list/models/Todo.dart';
 import 'AddTodoPage.dart';
 import 'EditTodoPage.dart';
 

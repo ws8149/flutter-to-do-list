@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import '../../components/AppNavBar.dart';
-import '../../components/AppScaffold.dart';
-import '../../components/DatePicker.dart';
-import '../../helpers/AlertHelper.dart';
-import '../../helpers/DateTimeHelpers.dart';
-import '../../models/AppDate.dart';
-import '../../models/Todo.dart';
-import '../../storage/LocalStorage.dart';
+import 'package:flutter_to_do_list/components/AppNavBar.dart';
+import 'package:flutter_to_do_list/components/AppScaffold.dart';
+import 'package:flutter_to_do_list/components/DatePicker.dart';
+import 'package:flutter_to_do_list/helpers/AlertHelper.dart';
+import 'package:flutter_to_do_list/helpers/DateTimeHelpers.dart';
+import 'package:flutter_to_do_list/models/AppDate.dart';
+import 'package:flutter_to_do_list/models/Todo.dart';
+import 'package:flutter_to_do_list/storage/LocalStorage.dart';
 
 
 class EditTodoPage extends StatefulWidget {
