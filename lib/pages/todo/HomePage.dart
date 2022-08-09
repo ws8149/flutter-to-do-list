@@ -5,6 +5,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../components/AppNavBar.dart';
 import '../../helpers/DateTimeHelpers.dart';
+import '../../models/AppDate.dart';
+import '../../models/Todo.dart';
 import 'AddTodoPage.dart';
 import 'EditTodoPage.dart';
 
@@ -20,41 +22,30 @@ class _HomePageState extends State<HomePage> {
 
   bool? value = false;
 
-  List<dynamic> itemList = [];
-
-  // List<dynamic> itemList = [
-  //   {
-  //     "id": 1,
-  //     "title": "Automated Testing Script 1",
-  //     "start_date": 982731983,
-  //     "end_date": 120321831,
-  //     "is_complete": false,
-  //   },
-  //   {
-  //     "id": 2,
-  //     "title": "Automated Testing Script 2",
-  //     "start_date": 982731983,
-  //     "end_date": 120321831,
-  //     "is_complete": false,
-  //   },
-  //
-  // ]
+  List<Todo> itemList = [];
 
   Future<void> initHomePage() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String prefs_todos = prefs.getString('TODO_ITEMS') ?? '';
+    String prefsTodos = prefs.getString('TODO_ITEMS') ?? '';
 
-    List<dynamic> todos = [];
+    List<Todo> todoList = [];
 
-    if (prefs_todos != '') {
-      todos = jsonDecode(prefs_todos);
+    List<dynamic> jsonList = [];
+
+    if (prefsTodos != '') {
+      jsonList = jsonDecode(prefsTodos);
+    }
+
+    for (var json in jsonList) {
+      Todo todo = Todo.fromJson(json);
+
+      todoList.add(todo);
     }
 
     print("todos retrieved: ");
-    print(todos);
 
     setState(() {
-      itemList = todos;
+      itemList = todoList;
     });
   }
 
@@ -74,8 +65,10 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget TodoCard (dynamic item) {
+  Widget TodoCard (Todo item) {
     const GREY_TEXT = TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: Colors.grey);
+    AppDate start_app_date = item.startAppDate!;
+    AppDate end_app_date = item.endAppDate!;
 
     return Container(
       decoration: BoxDecoration(
@@ -100,7 +93,7 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     const SizedBox(height: 10),
 
-                    Text(item["title"], style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                    Text(item.title!, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
 
                     const SizedBox(height: 10),
 
@@ -114,7 +107,7 @@ class _HomePageState extends State<HomePage> {
                             children: [
                               Text('Start Date', style: GREY_TEXT),
                               const SizedBox(height: 5),
-                              Text(item["start_app_date"]["display_date"], style: TextStyle(fontWeight: FontWeight.bold)),
+                              Text(start_app_date.displayDate!, style: TextStyle(fontWeight: FontWeight.bold)),
                             ],
                           ),
                           Column(
@@ -122,7 +115,7 @@ class _HomePageState extends State<HomePage> {
                             children: [
                               Text('End Date', style: GREY_TEXT),
                               const SizedBox(height: 5),
-                              Text(item["end_app_date"]["display_date"], style: TextStyle(fontWeight: FontWeight.bold)),
+                              Text(end_app_date.displayDate!, style: TextStyle(fontWeight: FontWeight.bold)),
                             ],
                           ),
                           Column(
@@ -130,7 +123,7 @@ class _HomePageState extends State<HomePage> {
                             children: [
                               Text('Time Left', style: GREY_TEXT),
                               const SizedBox(height: 5),
-                              Text(item["time_left"], style: TextStyle(fontWeight: FontWeight.bold)),
+                              Text(item.timeLeft!, style: TextStyle(fontWeight: FontWeight.bold)),
                             ],
                           ),
                         ],
