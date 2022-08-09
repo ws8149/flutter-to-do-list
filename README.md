@@ -7,6 +7,8 @@ This To-Do list app allows users to add To-Do cards which are stored locally on 
 
 The base logic of the application uses SharedPreferences to store data locally. This app can be further improved by adding language localizations, a dark mode setting and a proper cloud database where To-Do cards can be stored and synced from any device.
 
+There was one area of concern which was calculating the time left. Since the user is not able to specify the start date and end date time. I decided to only calculate and display the time left in days.
+
 ## How to Use The Project
 The app is hosted on Heroku and the link is provided below:
 https://flutter-to-do-list.herokuapp.com/#/
