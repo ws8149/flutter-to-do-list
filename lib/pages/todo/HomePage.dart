@@ -133,11 +133,11 @@ class _HomePageState extends State<HomePage> {
                     Text('Tick if completed', style: TextStyle(fontSize: 12)),
                     const SizedBox(width: 10),
                     Checkbox(
-                      value: this.value,
+                      value: item.isComplete,
                       onChanged: (bool? val) async {
-                        setState(() {
-                          this.value = val;
-                        });
+                        LocalStorage localStorage = LocalStorage();
+                        await localStorage.deleteTodo(item.id!);
+                        initHomePage();
                       },
                     )
                   ],
@@ -154,6 +154,7 @@ class _HomePageState extends State<HomePage> {
 
     if (_todo_list.isNotEmpty) {
       return ListView.separated(
+        padding: EdgeInsets.all(25.0),
         itemCount: _todo_list.length,
           separatorBuilder: (context, index) => SizedBox(
             height: 15,
@@ -187,24 +188,13 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Container(
         color: Colors.grey.shade300,
-        child: Padding(
-          padding: const EdgeInsets.all(25.0),
-          child: Container(
-            child: ItemListWidget()
-          ),
-        ),
+        child: ItemListWidget(),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-
-          int _currentId = 1;
-          if (_todo_list.length > 0) {
-            _currentId = _todo_list.length - 1;
-          }
-
           Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => AddTodoPage(currentId: _currentId))
+              MaterialPageRoute(builder: (context) => AddTodoPage(currentId: _todo_list.length))
           );
         },
         tooltip: 'Add Item',

@@ -143,4 +143,21 @@ class LocalStorage {
   }
 
 
+  Future<void> deleteTodo ( int id ) async {
+    // Get latest todos list from prefs
+    print("Get latest todos list from prefs");
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String prefs_todos = prefs.getString('TODO_ITEMS') ?? '';
+
+    List<dynamic> todos = [];
+
+    if (prefs_todos != '') {
+      todos = jsonDecode(prefs_todos);
+    }
+
+    todos.removeAt(id);
+
+    prefs.setString('TODO_ITEMS', jsonEncode(todos));
+  }
+
 }

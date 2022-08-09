@@ -78,7 +78,7 @@ class _AddTodoPageState extends State<AddTodoPage> {
                   _start_date_time = selectedDate;
                 });
               },
-              selectedDate: convertDateStringToDateTime(_start_app_date?.dateTimeString),
+              selectedDate: _start_date_time,
             ),
 
             const SizedBox(height: 20),
@@ -96,7 +96,7 @@ class _AddTodoPageState extends State<AddTodoPage> {
                   _end_date_time = selectedDate;
                 });
               },
-              selectedDate: convertDateStringToDateTime(_end_app_date?.dateTimeString),
+              selectedDate: _end_date_time,
             ),
 
             SizedBox(height: 20),
