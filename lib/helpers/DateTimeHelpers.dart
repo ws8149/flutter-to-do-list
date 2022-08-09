@@ -37,17 +37,12 @@ String calculateTimeLeft (DateTime startDateTime, DateTime endDateTime) {
   try {
     Duration duration = endDateTime.difference(startDateTime);
 
-    // Reduce by 1 day because we plan to show the remaining hours as well
-    String days = (duration.inDays - 1).toString();
+    String days = duration.inDays.toString();
 
-    String hours = duration.inHours.toString();
-    String mins = (duration.inMinutes - duration.inHours * 60).toString();
-
-    if (duration.inHours > 23) {
-      hours = (duration.inHours - duration.inDays * 24).toString();
-      time_left = "${days} days ${hours} hrs";
+    if (duration.inDays == 1) {
+      time_left = "${days} day";
     } else {
-      time_left = "${hours} hrs ${mins} mins";
+      time_left = "${days} days";
     }
 
   } catch (err) {

@@ -9,7 +9,7 @@ The base logic of the application uses SharedPreferences to store data locally. 
 
 ## How to Use The Project
 The app is hosted on Heroku and the link is provided below:
-
+https://flutter-to-do-list.herokuapp.com/#/
 
 ## How to Run The Project
 1. Clone this repository and open the folder with Android Studio or any Flutter IDE of your choice.
