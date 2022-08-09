@@ -1,10 +1,11 @@
 import 'dart:convert';
-
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../helpers/DateTimeHelpers.dart';
-import '../models/AppDate.dart';
-import '../models/Todo.dart';
+import 'package:flutter_to_do_list/helpers/DateTimeHelpers.dart';
+import 'package:flutter_to_do_list/models/AppDate.dart';
+import 'package:flutter_to_do_list/models/Todo.dart';
+
+import './StorageKeys.dart';
 
 /**
  * For saving and retrieving todo_list items locally
@@ -21,7 +22,7 @@ class LocalStorage {
 
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      String prefsTodos = prefs.getString('TODO_ITEMS') ?? '';
+      String prefsTodos = prefs.getString(StorageKeys.TODO_ITEMS) ?? '';
 
       List<dynamic> jsonList = [];
 
@@ -55,7 +56,7 @@ class LocalStorage {
       try {
         // Get latest todos list from prefs
         SharedPreferences prefs = await SharedPreferences.getInstance();
-        String prefs_todos = prefs.getString('TODO_ITEMS') ?? '';
+        String prefs_todos = prefs.getString(StorageKeys.TODO_ITEMS) ?? '';
 
         List<dynamic> todos = [];
 
@@ -80,7 +81,7 @@ class LocalStorage {
         todos.add(new_todo);
 
         // Save todos list
-        prefs.setString('TODO_ITEMS', jsonEncode(todos));
+        prefs.setString(StorageKeys.TODO_ITEMS, jsonEncode(todos));
 
 
       } catch (err) {
@@ -101,7 +102,7 @@ class LocalStorage {
       try {
         // Get latest todos list from prefs
         SharedPreferences prefs = await SharedPreferences.getInstance();
-        String prefs_todos = prefs.getString('TODO_ITEMS') ?? '';
+        String prefs_todos = prefs.getString(StorageKeys.TODO_ITEMS) ?? '';
 
         List<dynamic> todos = [];
 
@@ -125,7 +126,7 @@ class LocalStorage {
         todos[id] = new_todo;
 
         // Save todos list
-        prefs.setString('TODO_ITEMS', jsonEncode(todos));
+        prefs.setString(StorageKeys.TODO_ITEMS, jsonEncode(todos));
 
       } catch (err) {
         print("error adding new todo");
@@ -137,7 +138,7 @@ class LocalStorage {
   Future<void> deleteTodo ( int id ) async {
     // Get latest todos list from prefs
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String prefs_todos = prefs.getString('TODO_ITEMS') ?? '';
+    String prefs_todos = prefs.getString(StorageKeys.TODO_ITEMS) ?? '';
 
     List<dynamic> todos = [];
 
@@ -149,7 +150,7 @@ class LocalStorage {
 
     todos.removeAt(id);
 
-    prefs.setString('TODO_ITEMS', jsonEncode(todos));
+    prefs.setString(StorageKeys.TODO_ITEMS, jsonEncode(todos));
   }
 
 }
