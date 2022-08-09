@@ -74,7 +74,12 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     const SizedBox(height: 10),
 
-                    Text(item.title!, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                    Text(
+                      item.title!,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)
+                    ),
 
                     const SizedBox(height: 10),
 
