@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../components/AppNavBar.dart';
 import '../../components/AppScaffold.dart';
 import '../../components/DatePicker.dart';
+import '../../helpers/AlertHelper.dart';
 import '../../helpers/DateTimeHelpers.dart';
 import '../../models/AppDate.dart';
 import '../../models/Todo.dart';
@@ -140,6 +141,16 @@ class _EditTodoPageState extends State<EditTodoPage> {
           Spacer(),
           InkWell(
             onTap: () async {
+              if (_title == '') {
+                showAlert("Title is required.", context);
+                return;
+              }
+
+              if (_start_date_time!.isAfter(_end_date_time!)) {
+                showAlert("Start date must be before end date.", context);
+                return;
+              }
+
               LocalStorage localStorage = LocalStorage();
               await localStorage.updateTodo(
                   widget.id,
@@ -150,6 +161,8 @@ class _EditTodoPageState extends State<EditTodoPage> {
                   _end_date_time!
               );
               Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
+
+
             },
             child: Container(
                 width: MediaQuery.of(context).size.width,
