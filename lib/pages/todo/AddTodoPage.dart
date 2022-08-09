@@ -26,6 +26,7 @@ class _AddTodoPageState extends State<AddTodoPage> {
   AppDate? _start_app_date;
   AppDate? _end_app_date;
 
+  // For calculating time left
   DateTime? _start_date_time;
   DateTime? _end_date_time;
 

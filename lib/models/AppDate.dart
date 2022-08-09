@@ -15,4 +15,9 @@ class AppDate {
     data['display_date'] = this.displayDate;
     return data;
   }
+
+  @override
+  String toString() {
+    return 'AppDate{dateTimeString: $dateTimeString, displayDate: $displayDate}';
+  }
 }

@@ -43,6 +43,7 @@ class _HomePageState extends State<HomePage> {
     }
 
     print("todos retrieved: ");
+    print(todoList.toString());
 
     setState(() {
       itemList = todoList;

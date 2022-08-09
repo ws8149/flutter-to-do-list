@@ -47,5 +47,8 @@ class Todo {
   @override
   List<Object?> get props => [id, title, startAppDate, endAppDate, timeLeft, isComplete];
 
-
+  @override
+  String toString() {
+    return 'Todo{id: $id, title: $title, startAppDate: $startAppDate, endAppDate: $endAppDate, timeLeft: $timeLeft, isComplete: $isComplete}';
+  }
 }
