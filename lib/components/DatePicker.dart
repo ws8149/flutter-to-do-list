@@ -5,10 +5,14 @@ class DatePicker extends StatefulWidget {
   final DateTime? selectedDate;
   final Function onSelect;
 
-  DatePicker({required this.onSelect, this.selectedDate});
+  DatePicker({
+    Key? key,
+    required this.onSelect,
+    this.selectedDate,
+  });
 
   @override
-  DatePickerState createState() => DatePickerState();
+  State<DatePicker> createState() => DatePickerState();
 }
 
 class DatePickerState extends State<DatePicker> {
@@ -63,8 +67,8 @@ class DatePickerState extends State<DatePicker> {
               onDateTimeChanged: (DateTime newDate) {
                 selectedDate = newDate;
               },
-              minimumYear: 2000,
-              maximumYear: DateTime.now().year,
+              minimumYear: DateTime.now().year,
+              maximumYear: DateTime.now().year + 1,
               mode: CupertinoDatePickerMode.date,
             ),
           ),
@@ -92,31 +96,73 @@ class DatePickerState extends State<DatePicker> {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      height: 50,
-      child: OutlinedButton(
-        style: OutlinedButton.styleFrom(
-          side: BorderSide(
-            color: Colors.black,
-            style: BorderStyle.solid,
-            width: 0.5,
-          ),
-        ),
-        onPressed: () { openBottomSheet(context, datetimePicker(context)); },
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Align(
-                alignment: Alignment.centerLeft,
-                child: Text(dateText ?? 'Select a date', style: TextStyle(color: Colors.black45) )
-            ),
-            Icon(Icons.arrow_drop_down, color: Colors.black45)
-          ],
+  Widget showErrorText (FormFieldState<DateTime>formState, BuildContext context) {
+    return Container(
+      padding: EdgeInsets.only(top: 8, left: 10),
+      child: Align(
+        alignment: Alignment.centerLeft,
+        child: (
+          Text(
+            formState.errorText!,
+            style: TextStyle(color: Colors.red, fontSize: 12)
+          )
         ),
       ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FormField<DateTime>(
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      initialValue: widget.selectedDate,
+      validator: (value) {
+        if (value == null) {
+          return 'Date required';
+        }
+      },
+      builder: (formState) {
+        late Color border_color;
+
+        if (formState.hasError) {
+          border_color = Colors.red;
+        } else {
+          border_color = Colors.black;
+        }
+
+        return Column(
+          children: [
+            (
+                SizedBox(
+                  width: double.infinity,
+                  height: 50,
+                  child: OutlinedButton(
+                    style: OutlinedButton.styleFrom(
+                      side: BorderSide(
+                        color: border_color,
+                        style: BorderStyle.solid,
+                        width: 0.5,
+                      ),
+                    ),
+                    onPressed: () { openBottomSheet(context, datetimePicker(context)); },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(dateText ?? 'Select a date', style: TextStyle(color: Colors.black45) )
+                        ),
+                        Icon(Icons.arrow_drop_down, color: Colors.black45)
+                      ],
+                    ),
+                  ),
+                )
+            ),
+            if (formState.hasError) showErrorText(formState, context)
+          ],
+        );
+      },
+
     );
   }
 }
