@@ -32,9 +32,6 @@ class _EditTodoPageState extends State<EditTodoPage> {
   Future<void> initEditTodoPage() async {
     dynamic todoItem = widget.todoItem;
 
-    print('init todo page..');
-    print(todoItem);
-
     AppDate startAppDate = widget.todoItem.startAppDate!;
     AppDate endAppDate = widget.todoItem.endAppDate!;
     DateTime? startDateTime = convertDateStringToDateTime(startAppDate.dateTimeString);

@@ -12,9 +12,8 @@ import '../../models/AppDate.dart';
 
 
 class AddTodoPage extends StatefulWidget {
-  const AddTodoPage({Key? key, required int currentId}) : super(key: key);
-
-  final int currentId = 0;
+  final int currentId;
+  const AddTodoPage({Key? key, required this.currentId}) : super(key: key);
 
   @override
   State<AddTodoPage> createState() => _AddTodoPageState();

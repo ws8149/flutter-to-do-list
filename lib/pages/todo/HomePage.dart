@@ -38,8 +38,6 @@ class _HomePageState extends State<HomePage> {
 
 
   void goToEditTodoPage (Todo todo) {
-    print('Going to add todo page..');
-
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => EditTodoPage(id: todo.id!, todoItem: todo))

@@ -54,7 +54,6 @@ class LocalStorage {
   ) async {
       try {
         // Get latest todos list from prefs
-        print("Get latest todos list from prefs");
         SharedPreferences prefs = await SharedPreferences.getInstance();
         String prefs_todos = prefs.getString('TODO_ITEMS') ?? '';
 
@@ -68,7 +67,6 @@ class LocalStorage {
         String timeLeft = calculateTimeLeft(startDateTime, endDateTime);
 
         // Update todos list
-        print("Update todos list");
         dynamic new_todo = {
           "id": id,
           "title": title,
@@ -78,13 +76,10 @@ class LocalStorage {
           "is_complete": false,
         };
 
-        print('adding new todo..');
-        print(new_todo);
 
         todos.add(new_todo);
 
         // Save todos list
-        print("Save todos list");
         prefs.setString('TODO_ITEMS', jsonEncode(todos));
 
 
@@ -105,7 +100,6 @@ class LocalStorage {
 
       try {
         // Get latest todos list from prefs
-        print("Get latest todos list from prefs");
         SharedPreferences prefs = await SharedPreferences.getInstance();
         String prefs_todos = prefs.getString('TODO_ITEMS') ?? '';
 
@@ -119,7 +113,6 @@ class LocalStorage {
         String timeLeft = calculateTimeLeft(startDateTime, endDateTime);
 
         // Update todos list
-        print("Update todos list");
         dynamic new_todo = {
           "id": id,
           "title": title,
@@ -129,11 +122,9 @@ class LocalStorage {
           "is_complete": false,
         };
 
-        print('updating todo..');
         todos[id] = new_todo;
 
         // Save todos list
-        print("Save todos list");
         prefs.setString('TODO_ITEMS', jsonEncode(todos));
 
       } catch (err) {
@@ -145,7 +136,6 @@ class LocalStorage {
 
   Future<void> deleteTodo ( int id ) async {
     // Get latest todos list from prefs
-    print("Get latest todos list from prefs");
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String prefs_todos = prefs.getString('TODO_ITEMS') ?? '';
 
@@ -154,6 +144,8 @@ class LocalStorage {
     if (prefs_todos != '') {
       todos = jsonDecode(prefs_todos);
     }
+
+    print('removing id: $id');
 
     todos.removeAt(id);
 
