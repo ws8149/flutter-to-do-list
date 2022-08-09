@@ -106,7 +106,7 @@ class DatePickerState extends State<DatePicker> {
         child: (
           Text(
             formState.errorText!,
-            style: TextStyle(color: Colors.red, fontSize: 12)
+            style: TextStyle(color: Theme.of(context).errorColor, fontSize: 12)
           )
         ),
       ),
@@ -124,12 +124,20 @@ class DatePickerState extends State<DatePicker> {
         }
       },
       builder: (formState) {
-        late Color border_color;
+        late BorderSide border_style;
 
         if (formState.hasError) {
-          border_color = Colors.red;
+          border_style = BorderSide(
+            color: Theme.of(context).errorColor,
+            style: BorderStyle.solid,
+            width: 1,
+          );
         } else {
-          border_color = Colors.black;
+          border_style = BorderSide(
+            color: Colors.black,
+            style: BorderStyle.solid,
+            width: 0.5,
+          );
         }
 
         return Column(
@@ -140,11 +148,7 @@ class DatePickerState extends State<DatePicker> {
                   height: 50,
                   child: OutlinedButton(
                     style: OutlinedButton.styleFrom(
-                      side: BorderSide(
-                        color: border_color,
-                        style: BorderStyle.solid,
-                        width: 0.5,
-                      ),
+                      side: border_style,
                     ),
                     onPressed: () { openBottomSheet(context, datetimePicker(formState, context)); },
                     child: Row(
