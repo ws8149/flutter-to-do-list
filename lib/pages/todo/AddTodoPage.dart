@@ -46,23 +46,28 @@ class _AddTodoPageState extends State<AddTodoPage> {
 
                 const SizedBox(height: 10),
 
-                TextFormField(
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
-                    hintText: 'Please key in your To-Do Title here.',
-                    hintStyle: TextStyle(fontSize: 14, color: Colors.black38),
-                    counterText: '',
-                    contentPadding: EdgeInsets.only(top: 10, left: 10),
+                SizedBox(
+                  height: 80,
+                  child: TextFormField(
+                    expands: true,
+                    textAlignVertical: TextAlignVertical.top,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
+                      hintText: 'Please key in your To-Do Title here.',
+                      hintStyle: TextStyle(fontSize: 14, color: Colors.black38),
+                      counterText: '',
+                      contentPadding: EdgeInsets.only(top: 10, left: 10),
+                    ),
+                    maxLines: null,
+                    minLines: null,
+                    maxLength: 100,
+                    onChanged: (value) {
+                      setState(() {
+                        _title = value;
+                      });
+                    },
                   ),
-                  maxLength: 100,
-                  minLines: 1,
-                  maxLines: 10,
-                  onChanged: (value) {
-                    setState(() {
-                      _title = value;
-                    });
-                  },
                 ),
 
                 const SizedBox(height: 20),
