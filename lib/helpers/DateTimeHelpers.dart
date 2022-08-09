@@ -13,11 +13,13 @@ DateTime? convertDateStringToDateTime (String? dateStr) {
   return output;
 }
 
-String formatDateTimeForDisplay (DateTime dateTime) {
+String formatDateTimeForDisplay (DateTime? dateTime) {
   String output = '';
 
   try {
-    output = dateTime.day.toString() + " " + dateTime.month.toString() + " " + dateTime.year.toString();
+    output = (dateTime?.day.toString() ?? '')
+        + "/" + (dateTime?.month.toString() ?? '')
+        + "/" + (dateTime?.year.toString() ?? '');
   } catch (err) {
     print('Error formatting date time for display');
   }

@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../helpers/DateTimeHelpers.dart';
+
 class DatePicker extends StatefulWidget {
   final DateTime? selectedDate;
   final Function onSelect;
@@ -19,11 +21,11 @@ class DatePickerState extends State<DatePicker> {
   String? dateText;
 
   void initDatePicker () {
+    String formattedDateText = formatDateTimeForDisplay(widget.selectedDate);
+
     if (widget.selectedDate != null) {
       setState(() {
-        dateText = widget.selectedDate!.day.toString() + '/' +
-            widget.selectedDate!.month.toString() + '/' +
-            widget.selectedDate!.year.toString();
+        dateText = formattedDateText;
       });
     }
   }
@@ -78,9 +80,7 @@ class DatePickerState extends State<DatePicker> {
               // Select current date for user by default
               selectedDate = selectedDate ?? DateTime.now();
 
-              String formattedDateText = selectedDate!.day.toString() + '/' +
-                  selectedDate!.month.toString() + '/' +
-                  selectedDate!.year.toString();
+              String formattedDateText = formatDateTimeForDisplay(selectedDate);
 
               setState(() {
                 dateText = formattedDateText;
