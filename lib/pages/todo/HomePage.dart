@@ -16,9 +16,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
-  bool? value = false;
-
   List<Todo> _todo_list = [];
 
   Future<void> initHomePage() async {
