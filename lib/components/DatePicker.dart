@@ -52,7 +52,7 @@ class DatePickerState extends State<DatePicker> {
     );
   }
 
-  Widget datetimePicker(BuildContext context) {
+  Widget datetimePicker(FormFieldState<DateTime> formState, BuildContext context) {
     DateTime? selectedDate = widget.selectedDate;
 
     return Center(
@@ -89,6 +89,8 @@ class DatePickerState extends State<DatePicker> {
               Navigator.of(context).pop();
 
               widget.onSelect(selectedDate, formattedDateText);
+              formState.setValue(selectedDate);
+
             },
           )
         ],
@@ -96,7 +98,7 @@ class DatePickerState extends State<DatePicker> {
     );
   }
 
-  Widget showErrorText (FormFieldState<DateTime>formState, BuildContext context) {
+  Widget showErrorText (FormFieldState<DateTime> formState, BuildContext context) {
     return Container(
       padding: EdgeInsets.only(top: 8, left: 10),
       child: Align(
@@ -144,7 +146,7 @@ class DatePickerState extends State<DatePicker> {
                         width: 0.5,
                       ),
                     ),
-                    onPressed: () { openBottomSheet(context, datetimePicker(context)); },
+                    onPressed: () { openBottomSheet(context, datetimePicker(formState, context)); },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
