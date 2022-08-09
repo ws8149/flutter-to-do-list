@@ -36,68 +36,6 @@ class DatePickerState extends State<DatePicker> {
     initDatePicker();
   }
 
-  Future<void> openBottomSheet(BuildContext context, Widget child, {double? height}) {
-    return showModalBottomSheet(
-      isScrollControlled: false,
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(13),
-              topRight: Radius.circular(13)
-          )
-      ),
-      backgroundColor: Colors.white,
-      context: context,
-      builder: (context) => Container(
-          height: height ?? MediaQuery.of(context).size.height / 2,
-          child: child
-      ),
-    );
-  }
-
-  Widget datetimePicker(FormFieldState<DateTime> formState, BuildContext context) {
-    DateTime? selectedDate = widget.selectedDate;
-
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            height: 200,
-            child: CupertinoDatePicker(
-              initialDateTime: selectedDate ?? DateTime.now(),
-              onDateTimeChanged: (DateTime newDate) {
-                selectedDate = newDate;
-              },
-              minimumYear: DateTime.now().year,
-              maximumYear: DateTime.now().year + 1,
-              mode: CupertinoDatePickerMode.date,
-            ),
-          ),
-          CupertinoButton(
-            child: Text('OK'),
-            onPressed: () {
-              // Select current date for user by default
-              selectedDate = selectedDate ?? DateTime.now();
-
-              String formattedDateText = formatDateTimeForDisplay(selectedDate);
-
-              setState(() {
-                dateText = formattedDateText;
-              });
-
-              Navigator.of(context).pop();
-
-              widget.onSelect(selectedDate, formattedDateText);
-              formState.setValue(selectedDate);
-
-            },
-          )
-        ],
-      ),
-    );
-  }
-
   Widget showErrorText (FormFieldState<DateTime> formState, BuildContext context) {
     return Container(
       padding: EdgeInsets.only(top: 8, left: 10),
@@ -111,6 +49,24 @@ class DatePickerState extends State<DatePicker> {
         ),
       ),
     );
+  }
+
+  Future<void> pickDate (FormFieldState<DateTime> formState) async {
+    DateTime? selectedDate = await showDatePicker(
+      context: context,
+      initialDate: widget.selectedDate ?? DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate: DateTime(2100) , //
+    );
+
+    String formattedDateText = formatDateTimeForDisplay(selectedDate);
+
+    setState(() {
+      dateText = formattedDateText;
+    });
+
+    widget.onSelect(selectedDate, formattedDateText);
+    formState.setValue(selectedDate);
   }
 
   @override
@@ -150,7 +106,9 @@ class DatePickerState extends State<DatePicker> {
                     style: OutlinedButton.styleFrom(
                       side: border_style,
                     ),
-                    onPressed: () { openBottomSheet(context, datetimePicker(formState, context)); },
+                    onPressed: () async {
+                      pickDate(formState);
+                    },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
