@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_to_do_list/storage/LocalStorage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../components/AppNavBar.dart';
@@ -22,31 +23,14 @@ class _HomePageState extends State<HomePage> {
 
   bool? value = false;
 
-  List<Todo> itemList = [];
+  List<Todo> _todoList = [];
 
   Future<void> initHomePage() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String prefsTodos = prefs.getString('TODO_ITEMS') ?? '';
-
-    List<Todo> todoList = [];
-
-    List<dynamic> jsonList = [];
-
-    if (prefsTodos != '') {
-      jsonList = jsonDecode(prefsTodos);
-    }
-
-    for (var json in jsonList) {
-      Todo todo = Todo.fromJson(json);
-
-      todoList.add(todo);
-    }
-
-    print("todos retrieved: ");
-    print(todoList.toString());
+    LocalStorage localStorage = LocalStorage();
+    await localStorage.loadTodoList();
 
     setState(() {
-      itemList = todoList;
+      _todoList = localStorage.getTodoList();
     });
   }
 
@@ -174,9 +158,9 @@ class _HomePageState extends State<HomePage> {
 
   Widget ItemListWidget () {
 
-    if (itemList.isNotEmpty) {
+    if (_todoList.isNotEmpty) {
       return ListView.separated(
-        itemCount: itemList.length,
+        itemCount: _todoList.length,
           separatorBuilder: (context, index) => SizedBox(
             height: 15,
           ),
@@ -184,9 +168,9 @@ class _HomePageState extends State<HomePage> {
           return Column(
             children: [
               InkWell(
-                child: TodoCard(itemList[index]),
+                child: TodoCard(_todoList[index]),
                 onTap: () {
-                  goToEditTodoPage(itemList[index]);
+                  goToEditTodoPage(_todoList[index]);
                 },
               ),
             ],
@@ -220,8 +204,8 @@ class _HomePageState extends State<HomePage> {
         onPressed: () {
 
           int currentId = 1;
-          if (itemList.length > 0) {
-            currentId = itemList.length - 1;
+          if (_todoList.length > 0) {
+            currentId = _todoList.length - 1;
           }
 
           Navigator.push(
